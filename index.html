@@ -1,0 +1,51 @@
+<head>
+	<script src='jsdiff.js'></script>
+	<script src='simplediff.js'></script>
+	<script src='wt.js'></script>
+	<script src='wt2.js'></script>
+	<title>JSDiff and Simplediff</title>
+</head>
+<body>
+
+
+<body>
+	<script>
+		function removeEmpty(array) {
+			var ret = [];
+			for (var i = 0; i < array.length; i++) {
+				if (array[i]) {
+					ret.push(array[i]);
+				}
+			}
+			return ret;
+		};
+var tokenize = function(value) {
+    var retLines = [],
+        lines = value.split(/^/m);
+
+    for(var i = 0; i < lines.length; i++) {
+      var line = lines[i],
+          lastLine = lines[i - 1];
+
+      // Merge lines that may contain windows new lines
+      if (line == '\n' && lastLine && lastLine[lastLine.length - 1] === '\r') {
+        retLines[retLines.length - 1] += '\n';
+      } else if (line) {
+        retLines.push(line);
+      }
+    }
+
+    return retLines;
+  };
+
+		var jsDiff = JsDiff.diffWords(wt, wt2);
+		console.log('jsDiff:');
+		console.log(jsDiff);
+
+		var simpleDiff = diff(tokenize(wt), tokenize(wt2));
+		console.log('simpleDiff:');
+		console.log(simpleDiff);
+
+	</script>
+
+</body>
